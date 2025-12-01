@@ -1,0 +1,20 @@
+{
+  "user_id": "demo-user",
+  "project_id": "C-3001",
+  "region": "US-IRS-Section-41",
+  "model_name": "rule-based:v0",
+  "reviewer_id": null,
+  "legal_hold_flag": false,
+  "steps": [
+    {
+      "step_id": "2f51ad2c-fd11-43f7-b0c5-b05dfafd5629",
+      "timestamp": "2025-11-26T10:05:11Z",
+      "model_name": "rule-based:v0",
+      "thought": "Hybrid skip LLM (confident rule).",
+      "action": "classify_rule",
+      "observation": "eligible=True, confidence=0.80",
+      "confidence": 0.8
+    }
+  ],
+  "checksum_sha256": "14400fa75e141a0752b3755e557c54af6cb30b220da370c8ad4fb3b1f3681f18"
+}

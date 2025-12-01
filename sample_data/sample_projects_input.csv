@@ -1,0 +1,6 @@
+project_id,project_name,description,department,cost,start_date,end_date
+P-2001,AI Optimization Engine,Develop a new AI-based optimization algorithm to improve data pipeline throughput using experimentation and simulation.,Data Engineering,35000,01-07-2025,30-10-2025
+P-2002,Mobile UI Enhancement,"Update mobile app UI and branding, minor front-end adjustments",Design,8000,15-08-2025,15-09-2025
+P-2003,Quantum Simulation Tool,Research and prototype quantum-inspired algorithms to model molecular interactions using new experimental frameworks.,R&D,60000,01-06-2025,31-12-2025
+P-2004,HR Payroll Automation,"Integrate payroll data with ERP system, standard scripting",HR,15000,01-09-2025,10-10-2025
+P-2005,Self-Learning Sensor Firmware,Experiment with new calibration methods for embedded sensors; test and validate using simulation and iterative design.,Embedded Systems,42000,20-07-2025,15-11-2025

@@ -1,0 +1,6 @@
+﻿,project_id,eligible,confidence,rationale,trace_path
+0,P-1001,true,0.8,"LLM error fallback → could not convert string to float: 'high' → Rule-based: signals=['experimentation', 'algorithm', 'simulation'] score=3.",D:\VSCode projects\R&D_Tax_Credit\traces\trace_P-1001_20251024T050200Z_503e11a1.json
+1,P-1002,false,0.2,LLM error fallback → could not convert string to float: 'high' → Rule-based: signals=['uncertainty'] score=0.,D:\VSCode projects\R&D_Tax_Credit\traces\trace_P-1002_20251024T050205Z_73e1a395.json
+2,P-1003,true,0.4,LLM error fallback → could not convert string to float: 'high' → Rule-based: signals=['uncertainty'] score=1.,D:\VSCode projects\R&D_Tax_Credit\traces\trace_P-1003_20251024T050210Z_1ea6715f.json
+3,P-1004,false,0.2,LLM error fallback → could not convert string to float: 'high' → Rule-based: signals=[] score=0.,D:\VSCode projects\R&D_Tax_Credit\traces\trace_P-1004_20251024T050222Z_d6df7213.json
+4,P-1005,true,0.6,"LLM error fallback → could not convert string to float: 'high' → Rule-based: signals=['hypothesis', 'optimization'] score=2.",D:\VSCode projects\R&D_Tax_Credit\traces\trace_P-1005_20251024T050226Z_fc76a3c6.json

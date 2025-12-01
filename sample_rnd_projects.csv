@@ -1,0 +1,8 @@
+project_id,project_name,description,cost,category
+P001,Autonomous Vision System,Developing ML model for low-light navigation using transformer-based enhancement,54000,WAGES
+P002,Data Annotation Pipeline,Annotation and evaluation support for ML experiments,22000,WAGES
+P003,GPU Training Experiments,Cloud GPU compute for training multiple model variants,15000,CLOUD
+P004,Consultant Vision Review,Contractor vision expert providing model architecture review,28000,CONTRACTOR
+P005,Prototype Camera Sensors,Low-light prototype sensors used in experiments,8500,SUPPLIES
+P006,Marketing Website Redesign,External contractor redesigning the marketing website,9000,CONTRACTOR
+P007,Office Stationery,General office supplies used for admin work,1200,SUPPLIES

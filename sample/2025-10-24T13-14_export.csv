@@ -1,0 +1,21 @@
+﻿,project_id,project_name,eligible,confidence,rationale,trace_path
+0,P-101,Quantum Simulator,true,0.8500000000000001,"Eligible signals: optimization, algorithm",traces\trace_P-101_20251024T131427448259Z_b846b5ae.json
+1,P-102,Website Revamp 2.0,false,0.4,Eligible signals: none | Non-eligible hints: marketing,traces\trace_P-102_20251024T131427449266Z_8ca100c9.json
+2,P-103,Autonomous Drone Experiment,true,0.8500000000000001,"Eligible signals: prototype, algorithm",traces\trace_P-103_20251024T131427452233Z_1134aa6d.json
+3,P-104,Payroll Automation,false,0.55,Eligible signals: algorithm | Non-eligible hints: hr,traces\trace_P-104_20251024T131427453650Z_8b6b686e.json
+4,P-105,AI Financial Forecast Engine,true,0.7000000000000001,Eligible signals: experiment,traces\trace_P-105_20251024T131427454736Z_7e806092.json
+5,P-106,Data Compliance Tracker,false,0.55,Eligible signals: none,traces\trace_P-106_20251024T131427455735Z_c852b8cd.json
+6,P-107,Generative Text Algorithm,true,0.7000000000000001,Eligible signals: hypothesis,traces\trace_P-107_20251024T131427456738Z_48c814d7.json
+7,P-108,Client Onboarding Workflow,false,0.55,Eligible signals: none,traces\trace_P-108_20251024T131427456738Z_2034923b.json
+8,P-109,AR Maintenance Assistant,true,0.7000000000000001,Eligible signals: prototype,traces\trace_P-109_20251024T131427458192Z_befa354d.json
+9,P-110,SEO Optimization Campaign,true,0.7000000000000001,Eligible signals: optimization,traces\trace_P-110_20251024T131427459671Z_a534cae3.json
+10,P-111,Algorithm Risk Simulation,true,0.8500000000000001,"Eligible signals: uncertainty, simulation",traces\trace_P-111_20251024T131427460994Z_0babf30a.json
+11,P-112,Chatbot Customer Support,true,0.8500000000000001,"Eligible signals: experiment, experimentation",traces\trace_P-112_20251024T131427462297Z_4fd388a4.json
+12,P-113,Optimization Framework Migration,true,0.7000000000000001,Eligible signals: optimization,traces\trace_P-113_20251024T131427463296Z_be7faf00.json
+13,P-114,Knowledge Graph Builder,true,0.7000000000000001,Eligible signals: prototype,traces\trace_P-114_20251024T131427464793Z_590e99e7.json
+14,P-115,Social Media Analytics Dashboard,true,0.7000000000000001,Eligible signals: experiment,traces\trace_P-115_20251024T131427465794Z_1d681cd5.json
+15,P-116,Embedded Sensor Calibration,true,0.7000000000000001,Eligible signals: experiment,traces\trace_P-116_20251024T131427466792Z_0ab6b9fd.json
+16,P-117,Legal Contract Analyzer,false,0.55,Eligible signals: none,traces\trace_P-117_20251024T131427466792Z_d1c57237.json
+17,P-118,Customer Data Clean-up,false,0.55,Eligible signals: none,traces\trace_P-118_20251024T131427468522Z_bbc74dbd.json
+18,P-119,Multi-Agent Simulation Platform,true,0.8500000000000001,"Eligible signals: algorithm, simulation",traces\trace_P-119_20251024T131427469811Z_cd5ce36d.json
+19,P-120,Product Branding Update,true,0.8500000000000001,"Eligible signals: experiment, experimentation",traces\trace_P-120_20251024T131427469811Z_aab98c41.json

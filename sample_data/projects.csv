@@ -1,0 +1,6 @@
+project_id,project_name,description,department,cost,start_date,end_date
+P-1001,New Pricing Algorithm,"Build and test a new ML-driven pricing algorithm for dynamic discounts; involves experimentation, simulations, and code changes",Data Science,25000,2025-06-01,2025-09-30
+P-1002,Website Redesign,"Visual refresh of marketing site, content changes only; no backend logic or technical uncertainty",Marketing,8000,2025-08-01,2025-10-15
+P-1003,Sensor Firmware v2,"Develop new sensor calibration method; lab experiments to reduce noise and eliminate measurement uncertainty",R&D,45000,2025-05-15,2025-10-10
+P-1004,HR Policy Update,"Drafting new HR compliance policies and employee handbook",HR,2000,2025-07-01,2025-07-31
+P-1005,POC: Data Pipeline,"Proof-of-concept for a new ETL pipeline to handle streaming inputs; hypothesis testing and performance optimization",Engineering,18000,2025-09-01,2025-11-15

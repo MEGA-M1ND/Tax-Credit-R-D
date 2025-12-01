@@ -1,0 +1,38 @@
+{
+  "user_id": "demo-user",
+  "project_id": "N-1033",
+  "steps": [
+    {
+      "step_id": "b92fed47-cf62-4302-a0d6-9bc9cfb6dbed",
+      "timestamp": "2025-11-26T09:56:56.947653Z",
+      "model_name": "parser:v0",
+      "thought": "Parse incoming project record into analysis fields.",
+      "action": "parse",
+      "observation": "Got description length=164",
+      "confidence": 1.0
+    },
+    {
+      "step_id": "5b8c4b90-bf61-4291-8817-efbb1481d1a1",
+      "timestamp": "2025-11-26T09:56:56.947653Z",
+      "model_name": "openai:\"gpt-4.1",
+      "thought": "Apply IRS Section 41 via LLM (Tier 3, async).",
+      "action": "classify_with_llm",
+      "observation": "chat.completions (JSON-preferred)",
+      "confidence": 0.5
+    },
+    {
+      "step_id": "87be1847-96a9-4af1-98d8-550f2a146c04",
+      "timestamp": "2025-11-26T09:56:59.737494Z",
+      "model_name": "decision:v0",
+      "thought": "Consolidate evidence and decide eligibility.",
+      "action": "decide",
+      "observation": "eligible=True, confidence=1.00",
+      "confidence": 1.0
+    }
+  ],
+  "model_name": "openai:\"gpt-4.1",
+  "region": "US-IRS-Section-41",
+  "reviewer_id": null,
+  "legal_hold_flag": false,
+  "checksum_sha256": "935875e6e3a8ec2a7d1e2042b259729819920778edb60289e8573bdff585839e"
+}

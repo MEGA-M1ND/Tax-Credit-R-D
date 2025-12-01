@@ -1,0 +1,21 @@
+project_id,project_name,description,department,cost,start_date,end_date
+P-101,Quantum Simulator,Developed a quantum circuit simulator with probabilistic algorithms to test new optimization methods for qubit routing,R&D,85000,2025-01-15,2025-06-30
+P-102,Website Revamp 2.0,"UI/UX redesign of the marketing website, no new backend logic; focused on conversion rate improvements",Marketing,12000,2025-02-10,2025-03-20
+P-103,Autonomous Drone Experiment,Built multiple drone prototypes to test new pathfinding algorithms and AI-based obstacle avoidance,Engineering,95000,2025-03-01,2025-08-30
+P-104,Payroll Automation,Implemented an HR payroll tool using existing frameworks; minimal custom code or algorithmic work,HR,20000,2025-04-01,2025-06-15
+P-105,AI Financial Forecast Engine,Experimented with time-series forecasting using neural networks to predict quarterly cashflows; fine-tuned hyperparameters,Finance,67000,2025-02-05,2025-07-25
+P-106,Data Compliance Tracker,"Developed an internal compliance dashboard using Power BI; used existing datasets, no new models or methods",Compliance,18000,2025-04-10,2025-05-20
+P-107,Generative Text Algorithm,Created a transformer-based model fine-tuned for summarizing technical documentation; ran multiple hypothesis tests,Data Science,110000,2025-03-15,2025-09-01
+P-108,Client Onboarding Workflow,Automated KYC forms using OCR and regex extraction; minor data transformation logic,Operations,25000,2025-05-05,2025-06-10
+P-109,AR Maintenance Assistant,Prototype AR app to assist factory workers with real-time machine data overlays; tested multiple SDK integrations,Product Innovation,80000,2025-03-12,2025-07-01
+P-110,SEO Optimization Campaign,Researched keyword trends and improved ranking via on-page optimization; no new tech developed,Marketing,9500,2025-01-20,2025-02-25
+P-111,Algorithm Risk Simulation,Built Monte Carlo simulation to quantify market exposure uncertainty; validated outputs via historical backtests,Finance,72000,2025-02-15,2025-08-10
+P-112,Chatbot Customer Support,Integrated a third-party chatbot; no custom training or experimentation,Customer Service,15000,2025-04-22,2025-05-25
+P-113,Optimization Framework Migration,Ported legacy optimization routines into a new engine and added adaptive heuristics; benchmarked multiple scenarios,R&D,68000,2025-02-01,2025-06-01
+P-114,Knowledge Graph Builder,Constructed prototype to auto-link unstructured documents using graph embeddings and relation inference,AI Lab,95000,2025-01-05,2025-05-30
+P-115,Social Media Analytics Dashboard,Used prebuilt analytics APIs to monitor engagement; no novel methods or experiments involved,Marketing,16000,2025-04-01,2025-05-10
+P-116,Embedded Sensor Calibration,Designed experiments to calibrate IoT sensors for precision monitoring; iterated firmware models,Hardware,56000,2025-03-10,2025-07-20
+P-117,Legal Contract Analyzer,Fine-tuned transformer model to detect clause-level anomalies; built explainability layer to visualize model attention,LegalTech,89000,2025-02-12,2025-07-30
+P-118,Customer Data Clean-up,Data cleansing and deduplication of existing CRM; used standard ETL operations only,IT,12000,2025-05-05,2025-05-25
+P-119,Multi-Agent Simulation Platform,Built multi-agent simulation to test cooperative learning algorithms; analyzed emergent behavior patterns,Research,98000,2025-03-01,2025-08-15
+P-120,Product Branding Update,Updated product packaging visuals and brand assets; no experimentation or software development,Design,7000,2025-04-02,2025-04-20
