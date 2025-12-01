@@ -15,6 +15,7 @@ import os
 import json
 import hashlib
 import hmac
+import openai
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict, field
 from datetime import datetime
