@@ -310,12 +310,3 @@ This tool assists with R&D tax credit analysis but **does not replace profession
 
 ---
 
-If you want, next I can:
-
-* Tighten this for **VC / investor reading**
-* Create a **1-page product brief**
-* Create a **demo walkthrough script**
-* Rewrite it for a **Big-4 tax partner audience**
-* Add **screenshots & diagrams**
-
-Just tell me which audience you want next.
