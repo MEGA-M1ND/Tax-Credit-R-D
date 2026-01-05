@@ -9,10 +9,24 @@ from dotenv import load_dotenv
 from .models import ProjectRecord, ClassificationResult, TraceStep, TraceEnvelope
 
 # --- Env ---
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+load_dotenv(override=True)
+OPENAI_API_KEY = (os.getenv("OPENAI_API_KEY") or "").strip()
+OPENAI_BASE_URL = (os.getenv("OPENAI_BASE_URL") or "").strip()
+OPENAI_ORG_ID = (os.getenv("OPENAI_ORG_ID") or "").strip()
+OPENAI_PROJECT_ID = (os.getenv("OPENAI_PROJECT_ID") or "").strip()
+FORCE_LLM = (os.getenv("FORCE_LLM") or "").strip().lower() in {"1", "true", "yes", "on"}
 MODEL_NAME = os.getenv("OPENAI_MODEL", "gpt-4.1")
 USE_LLM = bool(OPENAI_API_KEY)
+
+_CLIENT_OPTIONS: Dict[str, Any] = {}
+if OPENAI_API_KEY:
+    _CLIENT_OPTIONS["api_key"] = OPENAI_API_KEY
+if OPENAI_BASE_URL:
+    _CLIENT_OPTIONS["base_url"] = OPENAI_BASE_URL
+if OPENAI_ORG_ID:
+    _CLIENT_OPTIONS["organization"] = OPENAI_ORG_ID
+if OPENAI_PROJECT_ID:
+    _CLIENT_OPTIONS["project"] = OPENAI_PROJECT_ID
 
 # Lazy imports (SDK may not exist in some envs)
 try:
@@ -22,7 +36,11 @@ except Exception:
     AsyncOpenAI = None     # type: ignore
 
 # Async client with short timeout & light retry (created only if LLM enabled)
-_async_client = AsyncOpenAI(timeout=60, max_retries=1) if (USE_LLM and AsyncOpenAI) else None
+_async_client = (
+    AsyncOpenAI(timeout=60, max_retries=1, **_CLIENT_OPTIONS)
+    if (USE_LLM and AsyncOpenAI)
+    else None
+)
 
 LLM_SYSTEM_PROMPT = (
     "You are an expert IRS R&D Tax Credit (Section 41) eligibility analyst with deep expertise in "
@@ -240,11 +258,20 @@ def _extract_json(content: str) -> Dict[str, Any]:
         match = re.search(r"\{.*\}", content or "", re.S)
         return json.loads(match.group(0)) if match else {}
 
+
+def _llm_ready(has_client: bool) -> bool:
+    """Return True if a usable LLM client is present; enforce FORCE_LLM when missing."""
+    if has_client:
+        return True
+    if FORCE_LLM:
+        raise RuntimeError("FORCE_LLM is enabled but no OpenAI client is available.")
+    return False
+
 # -------------------------
 # Backfill rationale (tiny, optional)
 # -------------------------
 async def _backfill_rationale_async(description: str, eligible: bool) -> str:
-    if not (USE_LLM and _async_client):
+    if not _llm_ready(USE_LLM and (_async_client is not None)):
         return _heuristic_rationale(description, eligible)
     try:
         msgs = [
@@ -262,10 +289,10 @@ async def _backfill_rationale_async(description: str, eligible: bool) -> str:
         return _heuristic_rationale(description, eligible)
 
 def _backfill_rationale_sync(description: str, eligible: bool) -> str:
-    if not (USE_LLM and OpenAI):
+    if not _llm_ready(USE_LLM and (OpenAI is not None)):
         return _heuristic_rationale(description, eligible)
     try:
-        client = OpenAI(timeout=60, max_retries=1)
+        client = OpenAI(timeout=60, max_retries=1, **_CLIENT_OPTIONS)
         msgs = [
             {"role": "system", "content": "Write one short sentence (<=30 words) explaining the R&D eligibility under IRS Section 41. Be specific and factual."},
             {"role": "user", "content": f"Eligible={eligible}. Project: {description}"}
@@ -296,7 +323,7 @@ def _model_candidates() -> list:
 
 async def _chat_llm_async(model: str, messages: list) -> Dict[str, Any]:
 
-    if not (USE_LLM and _async_client):
+    if not _llm_ready(USE_LLM and (_async_client is not None)):
         return {}
 
     last_exc = None
@@ -335,12 +362,12 @@ async def _chat_llm_async(model: str, messages: list) -> Dict[str, Any]:
 # Sync LLM helper with graceful retry
 # -------------------------
 def _chat_llm_sync(model: str, messages: list) -> Dict[str, Any]:
-    if not (USE_LLM and OpenAI):
+    if not _llm_ready(USE_LLM and (OpenAI is not None)):
         return {}
 
     last_exc = None
     for candidate in _model_candidates():
-        client = OpenAI(timeout=60, max_retries=1)
+        client = OpenAI(timeout=60, max_retries=1, **_CLIENT_OPTIONS)
         params = _build_chat_params(candidate, messages, want_json=True)
         try:
             r = client.chat.completions.create(**params)
@@ -399,7 +426,7 @@ def analyze_with_dual_check(
     
     Returns (classification, trace, verification_report)
     """
-    if not (USE_LLM and OpenAI):
+    if not _llm_ready(USE_LLM and (OpenAI is not None)):
         raise RuntimeError("Dual-check requires LLM enabled.")
     
     primary_model = primary_model or MODEL_NAME
@@ -408,7 +435,7 @@ def analyze_with_dual_check(
     primary_result, primary_trace = analyze_project(record, user_id=f"{user_id}:primary")
     
     # Get verifier analysis (independently)
-    client = OpenAI(timeout=60, max_retries=1)
+    client = OpenAI(timeout=60, max_retries=1, **_CLIENT_OPTIONS)
     verifier_msgs = [
         {"role": "system", "content": LLM_SYSTEM_PROMPT},
         {"role": "user", "content":
@@ -485,7 +512,7 @@ async def analyze_project_async(record: ProjectRecord, user_id: str = "demo-user
             confidence=confidence
         ))
     # Tier 2: Rule-Based Heuristic (if not ruled out and LLM unavailable)
-    elif not (USE_LLM and _async_client is not None):
+    elif not _llm_ready(USE_LLM and (_async_client is not None)):
         eligible, confidence, rationale = rule_based_classifier(record.description)
         steps.append(TraceStep(
             step_id=str(uuid.uuid4()), timestamp=datetime.utcnow().isoformat()+"Z",
@@ -592,7 +619,7 @@ def analyze_project_with_advanced_nlp(
         client = None
         if USE_LLM and OpenAI is not None:
             try:
-                client = OpenAI(timeout=60, max_retries=1)
+                client = OpenAI(timeout=60, max_retries=1, **_CLIENT_OPTIONS)
             except Exception:
                 client = None
 
@@ -864,7 +891,7 @@ def analyze_project_strict(record: ProjectRecord, user_id: str = "demo-user"):
 
     This is useful for testing with external datasets to ensure model-driven outputs.
     """
-    if not (USE_LLM and OpenAI is not None):
+    if not _llm_ready(USE_LLM and (OpenAI is not None)):
         raise RuntimeError("OpenAI client not configured. Set OPENAI_API_KEY and install SDK.")
 
     steps = []

@@ -68,3 +68,46 @@ class ImmutableTraceLogger:
         payload = dict(data)
         payload.pop("checksum_sha256", None)
         return saved == self._checksum(payload)
+
+    def write_review_trace(
+        self,
+        project_id: str,
+        reviewer_name: str,
+        reviewer_role: str,
+        old_status: str,
+        new_status: str,
+        reason: str,
+        additional_data: Optional[Dict[str, Any]] = None,
+    ) -> str:
+        """
+        Write a trace for a review action.
+        
+        Args:
+            project_id: Project being reviewed
+            reviewer_name: Name of reviewer
+            reviewer_role: Role of reviewer
+            old_status: Previous status
+            new_status: New status
+            reason: Reason for action
+            additional_data: Any extra data to include
+        
+        Returns:
+            Path to the written trace file
+        """
+        envelope = {
+            "type": "review_action",
+            "timestamp": datetime.utcnow().isoformat(),
+            "project_id": project_id,
+            "reviewer_name": reviewer_name,
+            "reviewer_role": reviewer_role,
+            "action": {
+                "old_status": old_status,
+                "new_status": new_status,
+                "reason": reason,
+            },
+        }
+        
+        if additional_data:
+            envelope.update(additional_data)
+        
+        return self.write_trace(envelope)

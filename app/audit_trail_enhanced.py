@@ -366,7 +366,12 @@ class AuditTrailManager:
                 md += f"- **Rationale**: {packet.rationale}\n"
                 md += f"- **Content Hash**: {packet.content_hash}\n"
                 if packet.signature:
-                    md += f"- **Signature**: {packet.signature.signature_hex[:16]}... (HMAC-SHA256)\n"
+                    # Handle both TraceSignature object and dict
+                    if isinstance(packet.signature, dict):
+                        sig_hex = packet.signature.get("signature_hex", "unknown")[:16]
+                    else:
+                        sig_hex = packet.signature.signature_hex[:16]
+                    md += f"- **Signature**: {sig_hex}... (HMAC-SHA256)\n"
                 md += "\n"
             
             return md

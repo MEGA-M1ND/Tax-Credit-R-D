@@ -1,13 +1,15 @@
 import os
 import json
 from fastapi import Header, HTTPException
+from typing import Optional
+from .review_models import ReviewerRole, can_approve_reject, can_override
 
 # Example in .env:
 # VALID_API_KEYS=admin123,analyst456,reviewer789
 VALID_KEYS = [k.strip() for k in os.getenv("VALID_API_KEYS", "").split(",") if k.strip()]
 
 # Example in .env:
-# USER_ROLES={"admin":"admin123","reviewer":"reviewer789","analyst":"analyst456"}
+# USER_ROLES={"admin":"ADMIN","reviewer":"REVIEWER","analyst":"ANALYST","tax_manager":"TAX_MANAGER"}
 ROLE_MAP = json.loads(os.getenv("USER_ROLES", "{}"))
 
 
@@ -25,28 +27,63 @@ def enforce_api_key(x_api_key: str = Header(default=None, alias="X-API-Key")) ->
     return x_api_key
 
 
-def get_role(api_key: str | None) -> str | None:
+def get_role(api_key: Optional[str]) -> Optional[ReviewerRole]:
     """Look up the role associated with a given API key."""
     if api_key is None:
         return None
-    for role, key in ROLE_MAP.items():
+    for role_str, key in ROLE_MAP.items():
         if key == api_key:
-            return role
+            try:
+                return ReviewerRole(role_str)
+            except ValueError:
+                return None
     return None
+
+
+def get_role_from_api_key(api_key: Optional[str]) -> Optional[ReviewerRole]:
+    """
+    Alias for get_role() for clarity.
+    Converts API key to ReviewerRole enum.
+    """
+    return get_role(api_key)
 
 
 def require_role(required_role: str):
     """
     Dependency factory enforcing that the caller has a specific role.
-    Usage: Depends(require_role("reviewer"))
+    Usage: Depends(require_role("REVIEWER"))
     """
 
-    def dependency(x_api_key: str = Header(default=None, alias="X-API-Key")) -> str:
+    def dependency(x_api_key: str = Header(default=None, alias="X-API-Key")) -> ReviewerRole:
         if not ROLE_MAP:
             raise HTTPException(status_code=500, detail="USER_ROLES not configured")
         role = get_role(x_api_key)
-        if role != required_role:
+        if role is None or role.value != required_role:
             raise HTTPException(status_code=403, detail=f"Role '{role}' cannot access this resource")
         return role
 
     return dependency
+
+
+def require_approve_reject(x_api_key: str = Header(default=None, alias="X-API-Key")) -> ReviewerRole:
+    """
+    Dependency enforcing that the caller can approve/reject.
+    """
+    if not ROLE_MAP:
+        raise HTTPException(status_code=500, detail="USER_ROLES not configured")
+    role = get_role(x_api_key)
+    if role is None or not can_approve_reject(role):
+        raise HTTPException(status_code=403, detail=f"Role '{role}' cannot approve/reject. Required: REVIEWER or higher.")
+    return role
+
+
+def require_override(x_api_key: str = Header(default=None, alias="X-API-Key")) -> ReviewerRole:
+    """
+    Dependency enforcing that the caller can override.
+    """
+    if not ROLE_MAP:
+        raise HTTPException(status_code=500, detail="USER_ROLES not configured")
+    role = get_role(x_api_key)
+    if role is None or not can_override(role):
+        raise HTTPException(status_code=403, detail=f"Role '{role}' cannot override. Required: DIRECTOR, PARTNER, or ADMIN.")
+    return role

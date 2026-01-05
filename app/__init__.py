@@ -21,12 +21,6 @@ from .qre_categorization import (
     get_rd_percentage_for_role,
 )
 
-from .form_6765_generator import (
-    Form6765Data,
-    Form6765Generator,
-    GrossReceiptsPeriod,
-)
-
 from .audit_defense_pack import (
     AuditDefensePack,
     AuditDefenseGenerator,
@@ -69,9 +63,6 @@ __all__ = [
     "calculate_eligible_wages",
     "get_rd_percentage_for_role",
     # Phase 2.2: Form 6765 Generator
-    "Form6765Data",
-    "Form6765Generator",
-    "GrossReceiptsPeriod",
     # Phase 2.3: Audit Defense Pack
     "AuditDefensePack",
     "AuditDefenseGenerator",
